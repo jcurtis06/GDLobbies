@@ -1,0 +1,143 @@
+[gd_scene load_steps=9 format=3 uid="uid://c43e5swweyipi"]
+
+[ext_resource type="Script" path="res://demo/scenes/demo_game.gd" id="1_dslyh"]
+[ext_resource type="Script" path="res://demo/scenes/demo_ui.gd" id="1_v7r5m"]
+[ext_resource type="Texture2D" uid="uid://dsfa83baol30l" path="res://demo/sprites/bg.png" id="2_2csq0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4wnn7"]
+content_margin_left = 10.0
+content_margin_top = 1.0
+content_margin_right = 10.0
+content_margin_bottom = 1.0
+bg_color = Color(0.878431, 0.878431, 0.878431, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dp86d"]
+content_margin_left = 10.0
+content_margin_top = 1.0
+content_margin_right = 10.0
+content_margin_bottom = 1.0
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rgddu"]
+content_margin_left = 10.0
+content_margin_top = 1.0
+content_margin_right = 10.0
+content_margin_bottom = 1.0
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i1kyy"]
+content_margin_left = 10.0
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="Theme" id="Theme_22tuh"]
+Button/colors/font_color = Color(0.407843, 0.972549, 0, 1)
+Button/colors/font_focus_color = Color(0.407843, 0.972549, 0, 1)
+Button/colors/font_outline_color = Color(0, 0, 0, 1)
+Button/colors/font_pressed_color = Color(0.407843, 0.972549, 0, 1)
+Button/constants/outline_size = 11
+Button/font_sizes/font_size = 32
+Button/styles/hover = SubResource("StyleBoxFlat_4wnn7")
+Button/styles/normal = SubResource("StyleBoxFlat_dp86d")
+Button/styles/pressed = SubResource("StyleBoxFlat_rgddu")
+LineEdit/colors/caret_color = Color(0, 0, 0, 1)
+LineEdit/colors/font_color = Color(0, 0, 0, 1)
+LineEdit/colors/font_placeholder_color = Color(0, 0, 0, 0.6)
+LineEdit/font_sizes/font_size = 24
+LineEdit/styles/normal = SubResource("StyleBoxFlat_i1kyy")
+
+[node name="Demo" type="Node2D"]
+script = ExtResource("1_dslyh")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Multiplayer" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_22tuh")
+script = ExtResource("1_v7r5m")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Multiplayer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -201.5
+offset_top = -89.0
+offset_right = 201.5
+offset_bottom = 89.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Multiplayer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Code" type="LineEdit" parent="UI/Multiplayer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Enter code"
+max_length = 8
+caret_blink = true
+
+[node name="Join" type="Button" parent="UI/Multiplayer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Join"
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Multiplayer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 25
+
+[node name="Host" type="Button" parent="UI/Multiplayer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Host Game"
+
+[node name="Start" type="Button" parent="UI/Multiplayer/VBoxContainer"]
+layout_mode = 2
+text = "Start Game"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2252.0
+offset_top = -2018.5
+offset_right = 2252.0
+offset_bottom = 2018.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_2csq0")
+stretch_mode = 1
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://demo/scenes/player.tscn")
+spawn_path = NodePath("..")
+
+[connection signal="pressed" from="UI/Multiplayer/VBoxContainer/HBoxContainer/Join" to="UI/Multiplayer" method="_on_join_pressed"]
+[connection signal="pressed" from="UI/Multiplayer/VBoxContainer/Host" to="UI/Multiplayer" method="_on_host_pressed"]
+[connection signal="pressed" from="UI/Multiplayer/VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="UI/Multiplayer/VBoxContainer/Start" to="UI/Multiplayer" method="_on_start_pressed"]
